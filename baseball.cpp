@@ -36,12 +36,22 @@ public:
 		}
 	}
 
+	int countStrike(const string& guessNumber) {
+		int cnt = 0;
+		for (int i = 0; i < 3; ++i) {
+			if (question[i] == guessNumber[i]) cnt += 1;
+		}
+		return cnt;
+	}
+
 	GuessResult guess(const string& guessNumber) {
+		GuessResult rst = { false, 2, 0 };
 		assertIllegalArgument(guessNumber);
 		if (guessNumber == question) {
 			return { true, 3, 0 };
 		}
-		return { false, 2, 0 };
+		rst.strikes = countStrike(guessNumber);
+		return rst;
 	}
 
 private:
