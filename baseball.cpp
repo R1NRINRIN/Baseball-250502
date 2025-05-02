@@ -41,7 +41,7 @@ public:
 		if (guessNumber == question) {
 			return { true, 3, 0 };
 		}
-		return { false, 0, 0 };
+		return { false, 2, 0 };
 	}
 
 private:
