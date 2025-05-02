@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include <string>
 
 using namespace std;
 
@@ -20,6 +21,15 @@ public:
 			|| guessNumber[1] == guessNumber[2];
 	}
 
+	bool isStrike(const string& guessNumber, int i) {
+		return question[i] == guessNumber[i];
+	}
+
+	bool isBall(const string& guessNumber, int i) {
+		return !isStrike(guessNumber, i)
+			&& guessNumber.find(question[i]) != string::npos;
+	}
+
 	void assertIllegalArgument(const string& guessNumber) {
 		if (guessNumber.length() != 3) {
 			throw length_error("Must be three letters.");
@@ -39,7 +49,15 @@ public:
 	int countStrike(const string& guessNumber) {
 		int cnt = 0;
 		for (int i = 0; i < 3; ++i) {
-			if (question[i] == guessNumber[i]) cnt += 1;
+			if (isStrike(guessNumber, i)) cnt += 1;
+		}
+		return cnt;
+	}
+
+	int countBall(const string& guessNumber) {
+		int cnt = 0;
+		for (int i = 0; i < 3; ++i) {
+			if (isBall(guessNumber, i))	cnt += 1;
 		}
 		return cnt;
 	}
@@ -51,7 +69,7 @@ public:
 			return { true, 3, 0 };
 		}
 		rst.strikes = countStrike(guessNumber);
-		if (rst.strikes == 1) return { false, 1, 2 };
+		rst.balls = countBall(guessNumber);
 		return rst;
 	}
 
