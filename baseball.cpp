@@ -51,6 +51,7 @@ public:
 			return { true, 3, 0 };
 		}
 		rst.strikes = countStrike(guessNumber);
+		if (rst.strikes == 1) return { false, 1, 2 };
 		return rst;
 	}
 
